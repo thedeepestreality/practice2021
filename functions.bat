@@ -9,6 +9,8 @@ echo %retval%
 
 REM passing all the console arguments
 call :iterateargs %*
+REM arguments are shifted only locally
+echo command name: %0
 exit /b
 
 :global_return
@@ -25,7 +27,12 @@ exit /b
 :iterateargs
 echo started iterate_args func
 :iterateargs_cycle
-if "%1"=="" exit/b
+if "%1"=="" (
+	REM numbered arguments are shifted
+	REM but %* notation is unchanged!
+	echo initial args: ^(%*^)
+    exit /b
+)
 echo arg %1
 REM shifting args by 1
 shift
