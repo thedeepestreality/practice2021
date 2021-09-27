@@ -1,4 +1,6 @@
 @echo off
+REM basic examples on FOR loop
+REM see https://ss64.com/nt/for.html
 
 REM iterate through the list
 echo SIMPLE FOR LOOP:

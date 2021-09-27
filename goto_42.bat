@@ -1,5 +1,6 @@
 @echo off
-rem infinite cycle with goto
+REM infinite cycle with goto
+REM see https://ss64.com/nt/goto.html
 
 set answer=%1
 :begin

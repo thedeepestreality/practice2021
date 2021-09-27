@@ -1,4 +1,8 @@
 @echo off
+REM basic functions (subroutines) examples
+REM see https://ss64.com/nt/call.html
+REM see https://ss64.com/nt/shift.html
+
 REM no args passed
 call :global_return
 echo %result%
@@ -10,7 +14,7 @@ echo %retval%
 REM passing all the console arguments
 call :iterateargs %*
 REM arguments are shifted only locally
-echo command name: %0
+echo command name unchanged: %0
 exit /b
 
 :global_return

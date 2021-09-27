@@ -1,4 +1,7 @@
 @echo off
+REM examples on the Delayed Expansion
+REM see https://ss64.com/nt/delayedexpansion.html
+
 REM inner IF will not work
 REM because it is in fact on the same line
 REM with the outer IF and VAR value read only once
