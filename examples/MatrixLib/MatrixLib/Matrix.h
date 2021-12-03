@@ -12,6 +12,7 @@ double** createMatrix(size_t rows, size_t cols);
 ///TODO: add documentation
 void deleteMatrix(double** matrix, size_t rows, size_t cols);
 void inputMatrix(double** matrix, size_t rows, size_t cols);
+double** inputFileMatrix(char const* filename, size_t& rows, size_t& cols);
 void printMatrix(double** matrix, size_t rows, size_t cols);
 void zeros(double** matrix, size_t rows, size_t cols);
 void ones(double** matrix, size_t rows, size_t cols);
@@ -26,3 +27,20 @@ double** transpose(double** matrix, size_t rows, size_t cols);
 void rotate180(double** matrix, size_t rows, size_t cols);
 
 double& findMinimum(double** matrix, size_t rows, size_t cols);
+
+// find max element of the min elements in the rows
+double& minmaxMatrix(double** matrix, size_t rows, size_t cols);
+
+// swap rows with indices k1 and k2 
+// and swap cols with indices k1 and k2
+void mixMatrix( double** matrix, 
+                size_t rows, 
+                size_t cols,
+                size_t k1,
+                size_t k2);
+
+void randMatrix(double** matrix,
+                size_t rows,
+                size_t cols,
+                double minval = 0,
+                double maxval = 1);
