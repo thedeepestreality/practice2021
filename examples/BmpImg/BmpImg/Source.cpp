@@ -4,6 +4,6 @@
 
 int main()
 {
-
+	printImgInfo("masterpiece.bmp");
 	return 0;
 }
