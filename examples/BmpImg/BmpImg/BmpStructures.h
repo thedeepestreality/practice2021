@@ -48,8 +48,8 @@ struct RGB
 struct RgbImg
 {
 	RGB** pixels;
-    size_t width;
     size_t height;
+    size_t width;
 };
 
 //А эта строчка отменяет отмену выравнивания :)
