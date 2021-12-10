@@ -43,9 +43,9 @@ void testAutolevels()
 //Another autobalancing example
 void testGrayworld()
 {
-	RgbImg img = readRgbImg("data\\Lenna.bmp");
+	RgbImg img = readRgbImg("data\\sinichka.bmp");
 	RgbImg balanced = grayworld(img);
-	writeRgbImg("out\\Lenna_grayworld.bmp", img);
+	writeRgbImg("out\\grayworld.bmp", balanced);
 	deleteRgbImg(img);
 }
 
@@ -87,6 +87,6 @@ void testContours()
 
 int main()
 {
-	testContours();
+	testGrayworld();
 	return 0;
 }
