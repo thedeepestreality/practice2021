@@ -25,7 +25,11 @@ void genImgWithSquare()
 
 int main()
 {
-	genImgWithSquare();
+	//genImgWithSquare();
+	RgbImg img = readRgbImg("Lenna.bmp");
+	autolevels(img);
+	writeRgbImg("Lenna_corrected.bmp", img);
+	deleteRgbImg(img);
 	//printImgInfo("masterpiece.bmp");
 	//RgbImg img = readRgbImg("masterpiece.bmp");
 	//for (size_t row=0; row < 50;++row)

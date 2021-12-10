@@ -11,6 +11,53 @@ void deleteRgbImg(RgbImg& img)
     delete[] img.pixels;
 }
 
+BYTE linearTransform(BYTE x, BYTE min1, BYTE max1, BYTE min2 = 0, BYTE max2 = 255)
+{
+    return (double)(x - min1) * (max2 - min2) / (max1 - min1) + min2;
+}
+
+void autolevels(RgbImg& img)
+{
+    BYTE b_min = img.pixels[0][0].Blue;
+    BYTE b_max = b_min;
+    BYTE g_min = img.pixels[0][0].Green;
+    BYTE g_max = g_min;
+    BYTE r_min = img.pixels[0][0].Red;
+    BYTE r_max = r_min;
+
+    size_t const height = img.height;
+    size_t const width = img.width;
+
+    for (size_t row = 0; row < height; ++row)
+        for (size_t col = 0; col < width; ++col)
+        {
+            RGB const& color = img.pixels[row][col];
+            if (color.Blue > b_max)
+                b_max = color.Blue;
+            if (color.Blue < b_min)
+                b_min = color.Blue;
+            if (color.Green > g_max)
+                g_max = color.Green;
+            if (color.Green < g_min)
+                g_min = color.Green;
+            if (color.Red > r_max)
+                r_max = color.Red;
+            if (color.Red < r_min)
+                r_min = color.Red;
+        }
+
+    for (size_t row = 0; row < height; ++row)
+        for (size_t col = 0; col < width; ++col)
+        {
+            BYTE& blue = img.pixels[row][col].Blue;
+            blue = linearTransform(blue, b_min, b_max);
+            BYTE& green = img.pixels[row][col].Green;
+            green = linearTransform(green, g_min, g_max);
+            BYTE& red = img.pixels[row][col].Red;
+            red = linearTransform(red, r_min, r_max);
+        }
+}
+
 int getOffset(int width)
 {
     int offset = 0;
