@@ -3,6 +3,14 @@
 #include <stdexcept>
 #include <iostream>
 
+void deleteRgbImg(RgbImg& img)
+{
+    size_t const height = img.height;
+    for (size_t row = 0; row < height; ++row)
+        delete[] img.pixels[row];
+    delete[] img.pixels;
+}
+
 int getOffset(int width)
 {
     int offset = 0;
