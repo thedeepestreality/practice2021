@@ -78,7 +78,7 @@ void testKernelFilter()
 
 void testContours()
 {
-	RgbImg img = readRgbImg("data\\valve.bmp");
+	RgbImg img = readRgbImg("data\\sinichka.bmp");
 	RgbImg contour_img = contours(img);
 	writeRgbImg("out\\contours.bmp", contour_img);
 	deleteRgbImg(img);
@@ -87,6 +87,14 @@ void testContours()
 
 int main()
 {
-	testContours();
+	try
+	{
+		testContours();
+	}
+	catch (std::exception const& e)
+	{
+		std::cout << "Error: " << e.what() << "\n";
+		return -1;
+	}
 	return 0;
 }
