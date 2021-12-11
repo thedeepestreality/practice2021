@@ -87,6 +87,6 @@ void testContours()
 
 int main()
 {
-	testGrayworld();
+	testContours();
 	return 0;
 }

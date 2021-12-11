@@ -44,9 +44,12 @@ RgbImg convolution(RgbImg const& img, size_t kernel_size, double** kernel)
                     r_weighted_sum += kern_el*pixel.Red;
                 }
             RGB& pixel = imgCopy.pixels[row][col];
-            imgCopy.pixels[row][col].Blue = std::abs(b_weighted_sum);
-            imgCopy.pixels[row][col].Green = std::abs(g_weighted_sum);
-            imgCopy.pixels[row][col].Red = std::abs(r_weighted_sum);
+            double blue = std::abs(b_weighted_sum);
+            double green = std::abs(g_weighted_sum);
+            double red = std::abs(r_weighted_sum);
+            pixel.Blue = blue > 255 ? 255 : blue;
+            pixel.Green = green > 255 ? 255 : green;
+            pixel.Red = red > 255 ? 255 : red;
         }
     return imgCopy;
 }
@@ -76,10 +79,6 @@ RgbImg contours(RgbImg const& img)
     		RGB& c_h = imgCopyHor.pixels[row][col];
     		RGB& c_v = imgCopyVer.pixels[row][col];
     		RGB& c_r = result.pixels[row][col];
-
-    		/*c_r.Blue = sqrt((double)c_h.Blue * c_h.Blue + c_v.Blue * c_v.Blue);
-    		c_r.Green = sqrt((double)c_h.Green * c_h.Green + c_v.Green * c_v.Green);
-    		c_r.Red = sqrt((double)c_h.Red * c_h.Red + c_v.Red * c_v.Red);*/
 
             double blue = sqrt((double)c_h.Blue * c_h.Blue + c_v.Blue * c_v.Blue);
             double green = sqrt((double)c_h.Green * c_h.Green + c_v.Green * c_v.Green);
