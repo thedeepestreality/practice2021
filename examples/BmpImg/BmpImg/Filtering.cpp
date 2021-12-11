@@ -54,7 +54,7 @@ RgbImg convolution(RgbImg const& img, size_t kernel_size, double** kernel)
 RgbImg contours(RgbImg const& img)
 {
     size_t const kern_sz = 3;
-    double div = 4;
+    double div = 1;
     double kern_hor[kern_sz][kern_sz] = {
     	{-1./ div, 0, 1. / div},
     	{-2. / div, 0, 2. / div},
@@ -77,9 +77,17 @@ RgbImg contours(RgbImg const& img)
     		RGB& c_v = imgCopyVer.pixels[row][col];
     		RGB& c_r = result.pixels[row][col];
 
-    		c_r.Blue = sqrt((double)c_h.Blue * c_h.Blue + c_v.Blue * c_v.Blue);
+    		/*c_r.Blue = sqrt((double)c_h.Blue * c_h.Blue + c_v.Blue * c_v.Blue);
     		c_r.Green = sqrt((double)c_h.Green * c_h.Green + c_v.Green * c_v.Green);
-    		c_r.Red = sqrt((double)c_h.Red * c_h.Red + c_v.Red * c_v.Red);
+    		c_r.Red = sqrt((double)c_h.Red * c_h.Red + c_v.Red * c_v.Red);*/
+
+            double blue = sqrt((double)c_h.Blue * c_h.Blue + c_v.Blue * c_v.Blue);
+            double green = sqrt((double)c_h.Green * c_h.Green + c_v.Green * c_v.Green);
+            double red = sqrt((double)c_h.Red * c_h.Red + c_v.Red * c_v.Red);
+
+            c_r.Blue = blue > 255 ? 255 : blue;
+            c_r.Green = green > 255 ? 255 : green;
+            c_r.Red = red > 255 ? 255 : red;
     	}
     autolevels(result, kern_sz);
     return result;
