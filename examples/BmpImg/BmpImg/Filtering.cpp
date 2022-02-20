@@ -57,19 +57,18 @@ RgbImg convolution(RgbImg const& img, size_t kernel_size, double** kernel)
 RgbImg contours(RgbImg const& img)
 {
     size_t const kern_sz = 3;
-    double div = 1;
-    double kern_hor[kern_sz][kern_sz] = {
-    	{-1./ div, 0, 1. / div},
-    	{-2. / div, 0, 2. / div},
-    	{-1. / div, 0, 1. / div}
+    static double kern_hor[kern_sz][kern_sz] = {
+    	{-1, 0, 1},
+    	{-2, 0, 2},
+    	{-1, 0, 1}
     };
-    double kern_ver[kern_sz][kern_sz] = {
-    	{-1. / div, -2. / div, -1. / div},
-    	{0, 0, 0},
-    	{1. / div, 2. / div, 1. / div}
+    static double kern_ver[kern_sz][kern_sz] = {
+    	{-1, -2, -1},
+    	{ 0,  0,  0},
+    	{ 1,  2,  1}
     };
-    double* ver_ptr[kern_sz] = { kern_hor[0], kern_hor[1], kern_hor[2] };
-    double* hor_ptr[kern_sz] = { kern_ver[0], kern_ver[1], kern_ver[2] };
+    static double* ver_ptr[kern_sz] = { kern_hor[0], kern_hor[1], kern_hor[2] };
+    static double* hor_ptr[kern_sz] = { kern_ver[0], kern_ver[1], kern_ver[2] };
     RgbImg imgCopyHor = convolution(img, kern_sz, hor_ptr);
     RgbImg imgCopyVer = convolution(img, kern_sz, ver_ptr);
     RgbImg result = copyRgbImg(img);
@@ -80,9 +79,9 @@ RgbImg contours(RgbImg const& img)
     		RGB& c_v = imgCopyVer.pixels[row][col];
     		RGB& c_r = result.pixels[row][col];
 
-            double blue = sqrt((double)c_h.Blue * c_h.Blue + c_v.Blue * c_v.Blue);
-            double green = sqrt((double)c_h.Green * c_h.Green + c_v.Green * c_v.Green);
-            double red = sqrt((double)c_h.Red * c_h.Red + c_v.Red * c_v.Red);
+            double blue = sqrt((double)c_h.Blue * c_h.Blue + (double)c_v.Blue * c_v.Blue);
+            double green = sqrt((double)c_h.Green * c_h.Green + (double)c_v.Green * c_v.Green);
+            double red = sqrt((double)c_h.Red * c_h.Red + (double)c_v.Red * c_v.Red);
 
             c_r.Blue = blue > 255 ? 255 : blue;
             c_r.Green = green > 255 ? 255 : green;
