@@ -2,10 +2,17 @@
 
 class Dummy
 {
+	int m_money;
 public:
 	Dummy(){
 		std::cout << "Hello world!\n";
 	}
+
+	Dummy(int money) : m_money(money)
+	{
+
+	}
+
 };
 
 template <typename Type>
@@ -142,6 +149,27 @@ int main()
 	b_vec.push_back(1);
 	std::cout << b_vec[0] << "\n";
 	b_vec[0] = 0;
+
+	Dummy* dummy_array = reinterpret_cast<Dummy*>(::operator new(3 * sizeof(Dummy))); // void* -> Dummy*
+
+	new(dummy_array) Dummy(3);
+	new(dummy_array + 1) Dummy(2);
+	new(dummy_array + 2) Dummy(1);
+
+	dummy_array[0].~Dummy();
+	dummy_array[1].~Dummy();
+	dummy_array[2].~Dummy();
+	::operator delete[](dummy_array);
+
+	float f = 1.5; // bin -> 01101100
+	int x;
+	x = static_cast<int>(f); // 01101100 -> 00000001 -> int(1)
+	x = reinterpret_cast<int>(f); // 01101100 -> 01101100 -> int(108)
+
+	int const& z = x;
+	const_cast<int&>(z) = 5; // x == 5
+
+	
 
 	return 0;
 }
