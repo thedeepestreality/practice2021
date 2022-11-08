@@ -24,9 +24,8 @@ void setup(){
   lc.shutdown(0,false);
   lc.setIntensity(0,8);
   lc.clearDisplay(0);
-  lc.setLed(0,1,1,1);
 }
-  
+char buf[3];
 void loop(){
   char customKey = customKeypad.getKey();
   
@@ -36,10 +35,11 @@ void loop(){
 
   if (Serial.available() >= 3)
   {
-    String s = Serial.readString();
-    int row = s[0] - 48;
-    int col = s[1] - 48;
-    bool state = s[2] - 48;
+    //String s = Serial.readString();
+    Serial.readBytes(buf, 3);
+    int row = buf[0] - 48;
+    int col = buf[1] - 48;
+    bool state = buf[2] - 48;
     lc.setLed(0,row,col,state);
   }
 }

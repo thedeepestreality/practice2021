@@ -74,6 +74,8 @@ document.addEventListener('DOMContentLoaded', function()
     const canvas_matrix = document.getElementById("matrix");
     const ctx_mtr = canvas_matrix.getContext("2d");
 
+    let socket = new WebSocket("ws://localhost:2022");
+
     canvas_matrix.addEventListener('click', function(event)
     {
         let rect = event.target.getBoundingClientRect();
@@ -82,11 +84,16 @@ document.addEventListener('DOMContentLoaded', function()
         let row = Math.floor(x/25);
         let col = Math.floor(y/25);
         led_state[row][col] = !led_state[row][col];
-        log_div.innerText = `click! ${row} ${col}`;
+        let str = "";
+        str += row;
+        str += col;
+        str += 1*led_state[row][col];
+        str += '\n';
+        log_div.innerText = str;
+        socket.send(str);
+        // log_div.innerText = `click! ${row} ${col}`;
         draw_matrix(ctx_mtr);
     });
-
-    let socket = new WebSocket("ws://localhost:2022");
 
     socket.onopen = function(e) {
         console.log("[open] Connected");
@@ -96,11 +103,6 @@ document.addEventListener('DOMContentLoaded', function()
         str = event.data.trim();
         console.log(`[message] Received: ${str}`);
         blink(ctx_kbd, str);
-        // if (str == "3")
-        // {
-        //     console.log("3!");
-        //     blink(ctx_kbd);
-        // }
     };
 
     socket.onclose = function(event) {
