@@ -33,8 +33,9 @@ async def serial_read():
     loop = aio.get_event_loop()
     while True:
         str = port.readline()
-        if (len(str) > 0):
-            print(str)
+        if (len(str) == 0):
+            continue
+        print(str)
         aio.ensure_future(q.put(str), loop=loop)
         await aio.sleep(1)
 
