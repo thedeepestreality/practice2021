@@ -39,7 +39,6 @@ async def serial_read():
         aio.ensure_future(q.put(str), loop=loop)
         await aio.sleep(1)
 
-
 async def main():
     async with websockets.serve(echo, "localhost", 2022):
         print("hello")

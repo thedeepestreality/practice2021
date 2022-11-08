@@ -44,11 +44,23 @@ function draw_matrix(ctx_mtr)
         }
 }
 
-function blink(ctx)
+function find_symbol(symbol)
+{
+    for (let row=0; row<4; ++row)
+        for (let col=0; col<4; ++col)
+            if (symbols[row][col] == symbol)
+            {
+                let result = {r:row, c:col};
+                return result;
+            }
+}
+
+function blink(ctx, symbol)
 {
     ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, 50, 50);
-    setInterval(function() { draw_keyboard(ctx) }, 1000);
+    res = find_symbol(symbol);
+    ctx.fillRect(res.c*50, res.r*50, 50, 50);
+    setInterval(function() { draw_keyboard(ctx); }, 1000);
 }
 
 document.addEventListener('DOMContentLoaded', function()
@@ -81,13 +93,14 @@ document.addEventListener('DOMContentLoaded', function()
     };
 
     socket.onmessage = function(event) {
-        str = event.data.trim()
+        str = event.data.trim();
         console.log(`[message] Received: ${str}`);
-        if (str == "3")
-        {
-            console.log("3!");
-            blink(ctx_kbd);
-        }
+        blink(ctx_kbd, str);
+        // if (str == "3")
+        // {
+        //     console.log("3!");
+        //     blink(ctx_kbd);
+        // }
     };
 
     socket.onclose = function(event) {
