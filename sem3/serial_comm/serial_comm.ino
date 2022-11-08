@@ -33,4 +33,13 @@ void loop(){
   if (customKey){
     Serial.println(customKey);
   }
+
+  if (Serial.available() >= 3)
+  {
+    String s = Serial.readString();
+    int row = s[0] - 48;
+    int col = s[1] - 48;
+    bool state = s[2] - 48;
+    lc.setLed(0,row,col,state);
+  }
 }
